@@ -25,7 +25,7 @@ defmodule Paginator.Config do
   @minimum_limit 1
   @maximum_limit 500
   @default_total_count_limit 10_000
-  @order_directions [:asc, :desc]
+  @order_directions [:asc, :desc, :asc_null, :desc_null]
 
   def new(opts \\ []) do
     %__MODULE__{
@@ -72,7 +72,7 @@ defmodule Paginator.Config do
   defp build_cursor_fields_from_sort_direction(fields, sorting_direction) do
     Enum.map(fields, fn
       {{_binding, _column}, _direction} = field -> field
-      {_column, direction} = field when direction in @order_directions  -> field
+      {_column, direction} = field when direction in @order_directions -> field
       {_binding, _column} = field -> {field, sorting_direction}
       field -> {field, sorting_direction}
     end)
